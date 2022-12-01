@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN"
+ "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+ <beans>
+ <!-- 타깃 클래스 -->
+ 	<bean id="calcTarget" class="com.spring.ex04.Calculator"/>
+ 	<!-- 로그 어드바이스 -->
+ 	<bean id="logAdvice" class="com.spring.ex04.LoggingAdvice"/>
+ 	
+ 	<!-- 타깃과 어드바이스 연결 -->
+ 	<bean id="proxyCal" class="org.springframework.aop.framework.ProxyFactoryBean">
+ 		<property name="target" ref="calcTarget"/>
+ 		<!-- 스프링의 프록시팩토리빈의 interceptorNames 속성에
+ 		logAdvice를 어드바이스 빈으로 설정하여 타깃 클래스의 메소드 호출시 실행되게끔함 (calcTarget 메소드 실행시 logAdvice실행)-->
+ 		<property name="interceptorNames"><!-- 이름을 내가 임의로 주는게 아님. -->
+ 			<list><!-- 리스트의 첫 인터셉터가 가장 먼저 호출을 가로챌 수 있다. -->
+ 				<value>logAdvice</value>
+ 			</list>
+ 		</property>
+ 	</bean>
+ </beans>

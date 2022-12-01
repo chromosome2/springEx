@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" id="WebApp_ID" version="4.0">
+	<display-name>springMVC</display-name><!-- web.xml의 제목. 보통 프로젝트명 -->
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>index.htm</welcome-file>
+		<welcome-file>default.html</welcome-file>
+		<welcome-file>default.jsp</welcome-file>
+		<welcome-file>default.htm</welcome-file>
+	</welcome-file-list>
+	
+	<servlet>
+		<servlet-name>action</servlet-name><!-- dispatcherServlet을 action이란 이름의 서블릿으로 만듦. -->
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<load-on-startup>1</load-on-startup><!-- 브라우저 접근시가 아닌 톰캣서버 실행시 DispatcherServlet의 매핑정보를 메모리에 저장-->
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>action</servlet-name>
+		<url-pattern>*.do</url-pattern><!-- DispatcherServlet이 받게되는 url패턴. DispatcherServlet를 매핑할 임의의 이름을 입력 -->
+	</servlet-mapping>
+</web-app>
+<!-- 
+클라이언트의 요청을 처리하는 DispatcherServlet.
+웹 어플리케이션 컨텍스트 단위의 설정을 로드하는 ContextLoaderListener,
+이건 꼭 거쳤으면 좋겠네. Filter. 
+
+클라이언트의 요청을 처리하기위해서는
+첫째, 클라이언트의 요청을 처리해줄 컨트롤러를 찾는다.
+둘째, 컨트롤러를 실행시킨다. (비지니스 로직 처리)
+셋째, 클라이언트에게 보여질 View를 찾는다.
+넷째, 응답 데이터와 View를 클라이언트에게 전달한다.
+
+-->
