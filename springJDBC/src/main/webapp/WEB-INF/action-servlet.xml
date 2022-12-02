@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans   
+http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+http://www.springframework.org/schema/aop
+http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+http://www.springframework.org/schema/context
+http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<!-- Default(기본) 뷰 리졸버. JSP를 뷰로 사용할 때 쓰여요. -->
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+		<property name="prefix" value="/WEB-INF/views/"/>
+		<property name="suffix" value=".jsp"/>
+	</bean>
+	
+	<bean id="memberController" class="com.spring.member.controller.MemberControllerImpl">
+		<property name="methodNameResolver">
+			<ref local="methodResolver"/>
+		</property>
+		<property name="memberService" ref="memberService"/>
+	</bean>
+	
+	<!-- 멀티 바인딩 -->
+	<bean id="methodResolver" class="org.springframework.web.servlet.mvc.multiaction.PropertiesMethodNameResolver">
+		<property name="mappings">
+			<props>
+			<!-- listMembers.do가 들어오면 listMembers메서드로 가라! -->
+				<prop key="/member/listMembers.do">listMembers</prop>
+				<prop key="/member/addMember.do">addMember</prop>
+				<prop key="/member/memberForm.do">memberForm</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- web.xml의 dispatcher에서 여기로 옴 -->
+	<bean id="userUrlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/member/*.do">memberController</prop><!-- 주소가 /member/*.do 형태면 memberController로 가라 -->
+			</props>
+		</property>
+	</bean>
+</beans>
+
+<!-- 스프링에서 필요한 여러 가지 빈을 설정 -->
