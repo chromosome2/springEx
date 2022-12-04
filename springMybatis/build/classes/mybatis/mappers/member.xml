@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 여기서 쿼리문 만들거임 -->
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.member">
+	<resultMap type="memberVO" id="memResult">
+		<result property="id" column="id"/>
+		<result property="pwd" column="pwd"/>
+		<result property="name" column="name"/>
+		<result property="email" column="email"/>
+		<result property="joinDate" column="joinDate"/><!-- setter, getter처럼 칼럼을 property에 넣어줌 -->
+	</resultMap><!-- membertbl의 칼럼이름과 속성이름을 같이 줘야함. 뒤의 column이 membertbl의 column -->
+	
+	<!-- resultType을 이용하면 자동 매핑되기 때문에 편리하지만 제한이 있으나,
+   resultMap을 사용하면 개발자가 직접 원하는 POJO 클래스에 매핑 가능 -->
+	<select id="selectAllMemberList" resultMap="memResult">
+		<![CDATA[
+			select * from membertbl order by joinDate desc
+		]]>
+	</select>
+	
+	<insert id="insertMember" parameterType="memberVO">
+		<![CDATA[
+			insert into membertbl(id, pwd, name, email) values(#{id},#{pwd}, #{name}, #{email})  
+		]]>
+	</insert>
+	
+	<!-- resultType : 클래스명 전체 또는 alias를 입력 << alias는 modelConfig에서 설정해줌. int 형같은 객체 또는 alias -->
+	<select id="findMember" resultType="memberVO" parameterType="String">
+		<![CDATA[
+			select * from membertbl where id=#{id}
+		]]>
+	</select>
+	
+	<update id="updateMember" parameterType="memberVO">
+		<![CDATA[
+			update membertbl set pwd=#{pwd}, name=#{name}, email=#{email} where id=#{id}
+		]]>
+	</update>
+	
+	<delete id="deleteMember" parameterType="String">
+		<![CDATA[
+			delete from membertbl where id=#{id}
+		]]>
+	</delete>
+	
+</mapper>
