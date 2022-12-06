@@ -9,7 +9,7 @@
     <welcome-file>default.jsp</welcome-file>
     <welcome-file>default.htm</welcome-file>
   </welcome-file-list>
-  <!-- 
+  
   <listener>
   	<listener-class>
   		org.springframework.web.context.ContextLoaderListener
@@ -19,10 +19,10 @@
   <context-param>
   	<param-name>contextConfigLocation</param-name>
   	<param-value>
-  		애플리케이션 실행시 ContextLoaderListener로 해당 위치의 설정 파일을 읽어들임. -->
-  		<!-- /WEB-INF/config/action-mybatis.xml
+  		<!-- 애플리케이션 실행시 ContextLoaderListener로 해당 위치의 설정 파일을 읽어들임. -->
+  		/WEB-INF/config/action-mybatis.xml
   	</param-value>
-  </context-param> -->
+  </context-param>
   
   <filter>
   	<filter-name>encodingFilter</filter-name>
